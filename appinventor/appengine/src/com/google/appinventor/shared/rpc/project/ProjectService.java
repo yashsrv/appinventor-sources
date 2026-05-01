@@ -90,6 +90,13 @@ public interface ProjectService extends RemoteService {
   UserProject restoreProject(long projectId);
 
   /**
+   * Sets whether a project is publicly importable via shared URL.
+   * @param projectId project ID
+   * @param isProjectPublic {@code true} if project should be public
+   */
+  void setProjectPublic(long projectId, boolean isProjectPublic);
+
+  /**
    * Facilitate logging into the new gallery by
    * generating a token which is passed to the gallery
    * which contains the appropriate login authentication

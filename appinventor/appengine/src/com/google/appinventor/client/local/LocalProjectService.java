@@ -269,6 +269,12 @@ public class LocalProjectService implements ProjectServiceAsync {
 
   }
 
+  @Override
+  public void setProjectPublic(long projectId, boolean isProjectPublic,
+      AsyncCallback<Void> callback) {
+    callback.onSuccess(null);
+  }
+
   public void renameProjects(List<Long> projectIds, List<String> projectNames,
       AsyncCallback<Void> callback) {
 

@@ -150,6 +150,39 @@ public interface StorageIo {
   void setMoveToTrashFlag(final String userId, final long projectId, boolean flag);
 
   /**
+   * Sets whether a project is publicly importable via shared URL.
+   *
+   * @param userId user ID
+   * @param projectId project ID
+   * @param isProjectPublic public flag value
+   */
+  void setProjectPublic(String userId, long projectId, boolean isProjectPublic);
+
+  /**
+   * Checks whether a project exists by project ID.
+   *
+   * @param projectId project ID
+   * @return {@code true} if project exists
+   */
+  boolean projectExists(long projectId);
+
+  /**
+   * Returns whether a project is publicly importable via shared URL.
+   *
+   * @param projectId project ID
+   * @return {@code true} if project is public
+   */
+  boolean isProjectPublic(long projectId);
+
+  /**
+   * Returns the owner user ID of a project.
+   *
+   * @param projectId project ID
+   * @return owner user ID or {@code null} if no owner mapping exists
+   */
+  String getProjectOwner(long projectId);
+
+  /**
    * Returns an array with the user's projects.
    *
    * @param userId  user ID

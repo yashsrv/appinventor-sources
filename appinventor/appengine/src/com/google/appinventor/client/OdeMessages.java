@@ -543,6 +543,14 @@ public interface OdeMessages extends Messages, ComponentTranslations {
   @Description("Name of Export Project menuitem")
   String exportProjectMenuItem();
 
+  @DefaultMessage("Share project")
+  @Description("Name of Share project menuitem")
+  String shareProjectMenuItem();
+
+  @DefaultMessage("Project link copied to clipboard")
+  @Description("Message shown after copying a project share URL")
+  String shareLinkCopied();
+
   @DefaultMessage("Export")
   @Description("Export button title")
   String exportButton();

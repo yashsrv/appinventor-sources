@@ -35,6 +35,11 @@ public class UserProject implements IsSerializable {
   private boolean projectMovedToTrashFlag;
 
   /**
+   * Flag indicating whether the project is publicly importable via shared URL.
+   */
+  private boolean isProjectPublic;
+
+  /**
    * The date the project was created expressed in milliseconds since
    * January 1, 1970 UTC
    */
@@ -70,7 +75,7 @@ public class UserProject implements IsSerializable {
    */
   public UserProject(long projectId, String projectName, String projectType, long creationDate, boolean projectMovedToTrashFlag) {
     this(projectId, projectName, projectType, creationDate, creationDate, 0,
-        projectMovedToTrashFlag);
+        projectMovedToTrashFlag, false);
   }
 
   /**
@@ -83,7 +88,7 @@ public class UserProject implements IsSerializable {
   public UserProject(long projectId, String projectName, String projectType, long creationDate,
       long modificationDate, boolean projectMovedToTrashFlag) {
     this(projectId, projectName, projectType, creationDate, modificationDate, 0,
-        projectMovedToTrashFlag);
+        projectMovedToTrashFlag, false);
   }
 
   /**
@@ -94,7 +99,8 @@ public class UserProject implements IsSerializable {
    * @param projectType the project type
    */
   public UserProject(long projectId, String projectName, String projectType, long creationDate,
-      long modificationDate, long buildDate, boolean projectMovedToTrashFlag) {
+      long modificationDate, long buildDate, boolean projectMovedToTrashFlag,
+      boolean isProjectPublic) {
     this.projectId = projectId;
     this.projectName = projectName;
     this.projectType = projectType;
@@ -102,6 +108,7 @@ public class UserProject implements IsSerializable {
     this.modificationDate = modificationDate;
     this.projectMovedToTrashFlag = projectMovedToTrashFlag;
     this.buildDate = buildDate;
+    this.isProjectPublic = isProjectPublic;
   }
 
   /**
@@ -165,6 +172,14 @@ public class UserProject implements IsSerializable {
 
   public boolean isInTrash() {
     return projectMovedToTrashFlag;
+  }
+
+  public boolean isProjectPublic() {
+    return isProjectPublic;
+  }
+
+  public void setProjectPublic(boolean isProjectPublic) {
+    this.isProjectPublic = isProjectPublic;
   }
 
   @Override

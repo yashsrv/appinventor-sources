@@ -518,6 +518,7 @@ public class ObjectifyStorageIo implements StorageIo {
           pd.name = project.getProjectName();
           pd.settings = projectSettings;
           pd.type = project.getProjectType();
+          pd.ownerUserId = userId;
           datastore.put(pd); // put the project in the db so that it gets assigned an id
 
           assert pd.id != null;
@@ -698,6 +699,90 @@ public class ObjectifyStorageIo implements StorageIo {
   }
 
   @Override
+  public void setProjectPublic(final String userId, final long projectId,
+      final boolean isProjectPublic) {
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          ProjectData projectData = datastore.find(projectKey(projectId));
+          if (projectData != null) {
+            // Lazy backfill for legacy projects
+            if (isProjectPublic && (projectData.ownerUserId == null
+                || projectData.ownerUserId.isEmpty())) {
+              projectData.ownerUserId = userId;
+            }
+            projectData.isProjectPublic = isProjectPublic;
+            datastore.put(projectData);
+          }
+        }
+      }, true);
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null, collectUserErrorInfo(userId), e);
+    }
+  }
+
+  @Override
+  public boolean projectExists(final long projectId) {
+    final Result<Boolean> exists = new Result<Boolean>();
+    exists.t = false;
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          exists.t = datastore.find(projectKey(projectId)) != null;
+        }
+      }, false);
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null,
+          "Error checking project existence for projectId=" + projectId, e);
+    }
+    return exists.t;
+  }
+
+  @Override
+  public boolean isProjectPublic(final long projectId) {
+    final Result<Boolean> isPublic = new Result<Boolean>();
+    isPublic.t = false;
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          ProjectData projectData = datastore.find(projectKey(projectId));
+          isPublic.t = projectData != null && projectData.isProjectPublic;
+        }
+      }, false);
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null,
+          "Error checking project visibility for projectId=" + projectId, e);
+    }
+    return isPublic.t;
+  }
+
+  @Override
+  public String getProjectOwner(final long projectId) {
+    final Result<String> ownerId = new Result<String>();
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          ProjectData projectData = datastore.find(projectKey(projectId));
+          if (projectData == null || projectData.ownerUserId == null
+              || projectData.ownerUserId.isEmpty()) {
+            ownerId.t = null;
+            return;
+          }
+          ownerId.t = projectData.ownerUserId;
+        }
+      }, false);
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null,
+          "Error looking up project owner for projectId=" + projectId, e);
+    }
+    return ownerId.t;
+  }
+
+  @Override
   public List<Long> getProjects(final String userId) {
     final List<Long> projects = new ArrayList<Long>();
     try {
@@ -819,7 +904,8 @@ public class ObjectifyStorageIo implements StorageIo {
     } else {
       return new UserProject(projectId, projectData.t.name,
           projectData.t.type, projectData.t.dateCreated,
-          projectData.t.dateModified, projectData.t.dateBuilt, projectData.t.projectMovedToTrashFlag);
+          projectData.t.dateModified, projectData.t.dateBuilt,
+          projectData.t.projectMovedToTrashFlag, projectData.t.isProjectPublic);
     }
   }
 
@@ -851,7 +937,8 @@ public class ObjectifyStorageIo implements StorageIo {
       for (ProjectData projectData : projectDatas.t.values()) {
         uProjects.add(new UserProject(projectData.id, projectData.name,
             projectData.type, projectData.dateCreated,
-            projectData.dateModified, projectData.dateBuilt, projectData.projectMovedToTrashFlag));
+            projectData.dateModified, projectData.dateBuilt,
+            projectData.projectMovedToTrashFlag, projectData.isProjectPublic));
       }
       return uProjects;
     }

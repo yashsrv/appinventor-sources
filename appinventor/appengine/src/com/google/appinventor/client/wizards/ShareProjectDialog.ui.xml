@@ -1,0 +1,44 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:w="urn:import:com.google.appinventor.client.widgets"
+             xmlns:wiz="urn:import:com.google.appinventor.client.wizards"
+             xmlns:c="urn:import:com.google.appinventor.client.components"
+             ui:generatedFormat="com.google.gwt.i18n.server.PropertyCatalogFactory"
+             ui:generatedKeys="com.google.gwt.i18n.server.keygen.MethodNameKeyGenerator"
+             ui:generateLocales="default">
+  <ui:with field="messages" type="com.google.appinventor.client.OdeMessages" />
+  <wiz:Dialog ui:field="shareDialog" caption="Share Project"
+              styleName="ode-DialogBox ode-ShareProjectDialog" width="400px">
+    <g:FlowPanel>
+      <g:HTMLPanel styleName="share-switch-container">
+        <label class="share-switch-label">
+          <span class="share-switch-text">Make project importable via URL</span>
+          <g:SimpleCheckBox ui:field="makePublicSwitch" styleName="share-switch-input" />
+        </label>
+      </g:HTMLPanel>
+      <g:FlowPanel styleName="share-options">
+        <g:FocusPanel ui:field="copyLinkOption" styleName="share-option-item">
+          <g:FlowPanel styleName="share-option-content">
+            <c:Icon icon="link" />
+            <g:Label>Copy project link</g:Label>
+          </g:FlowPanel>
+        </g:FocusPanel>
+        <g:FocusPanel ui:field="classroomOption" styleName="share-option-item">
+          <g:FlowPanel styleName="share-option-content">
+            <c:Icon icon="school" />
+            <g:Label>Share to Google Classroom</g:Label>
+          </g:FlowPanel>
+        </g:FocusPanel>
+        <g:FocusPanel ui:field="msteamOption" styleName="share-option-item">
+          <g:FlowPanel styleName="share-option-content">
+            <c:Icon icon="school" />
+            <g:Label>Share to Microsoft Teams</g:Label>
+          </g:FlowPanel>
+        </g:FocusPanel>
+      </g:FlowPanel>
+      <g:FlowPanel styleName="buttonRow">
+        <g:Button ui:field="cancelButton" text="{messages.cancelButton}" />
+      </g:FlowPanel>
+    </g:FlowPanel>
+  </wiz:Dialog>
+</ui:UiBinder>

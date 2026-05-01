@@ -95,6 +95,20 @@
     <servlet-name>downloadServlet</servlet-name>
   </filter-mapping>
 
+  <!-- share project import endpoint -->
+  <servlet>
+    <servlet-name>shareProjectServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.ShareProjectServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>shareProjectServlet</servlet-name>
+    <url-pattern>/share/*</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>shareProjectServlet</servlet-name>
+  </filter-mapping>
+
   <!-- projects -->
   <servlet>
     <servlet-name>projectService</servlet-name>

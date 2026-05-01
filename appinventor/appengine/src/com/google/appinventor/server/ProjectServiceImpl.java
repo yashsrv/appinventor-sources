@@ -226,6 +226,12 @@ public class ProjectServiceImpl extends OdeRemoteServiceServlet implements Proje
     return getProjectRpcImpl(userId, projectId).setMovedToTrash(userId, projectId, false);
   }
 
+  @Override
+  public void setProjectPublic(long projectId, boolean isProjectPublic) {
+    String userId = userInfoProvider.getUserId();
+    storageIo.setProjectPublic(userId, projectId, isProjectPublic);
+  }
+
   /**
    * Login to the new Gallery
    *

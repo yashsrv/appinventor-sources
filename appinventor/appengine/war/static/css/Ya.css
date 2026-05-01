@@ -3429,6 +3429,55 @@ div.dropdiv p {
   width: 768px;
 }
 
+.ode-ShareProjectDialog .dialogContent {
+  width: 400px;
+}
+
+.ode-ShareProjectDialog .share-switch-container {
+  margin-bottom: 12px;
+}
+
+.ode-ShareProjectDialog .share-switch-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ode-ShareProjectDialog .share-switch-text {
+  flex: 1;
+}
+
+.ode-ShareProjectDialog .share-switch-input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.ode-ShareProjectDialog .share-option-item {
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.ode-ShareProjectDialog .share-option-item:hover {
+  border-color: #b3c833;
+}
+
+.ode-ShareProjectDialog .share-option-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.ode-ShareProjectDialog .share-option-content .material-icons {
+  color: #2f3b2f;
+}
+
 .image-radio-group {
   display: flex;
   justify-content: space-between;

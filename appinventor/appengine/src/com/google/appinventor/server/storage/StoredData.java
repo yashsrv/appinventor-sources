@@ -97,11 +97,17 @@ public class StoredData {
     // Date project last built/exported as a runnable binary
     long dateBuilt;
 
+    // User id of the owner account for this project
+    String ownerUserId;
+
     // The specially formatted project history
     String history;
 
     //adding a boolean variable to mark deleted project
     boolean projectMovedToTrashFlag;
+
+    // Flag indicating whether the project is publicly importable via shared URL
+    boolean isProjectPublic;
   }
 
   // Project properties specific to the user

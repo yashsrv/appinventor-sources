@@ -155,6 +155,20 @@ public final class Project {
      projectInfo.setDateBuilt(date);
   }
 
+  /**
+   * Returns whether this project is publicly importable via shared URL.
+   */
+  public boolean isProjectPublic() {
+    return projectInfo.isProjectPublic();
+  }
+
+  /**
+   * Updates this project's public-importability flag in the local cache.
+   */
+  public void setProjectPublic(boolean isProjectPublic) {
+    projectInfo.setProjectPublic(isProjectPublic);
+  }
+
 
   /**
    * The project-folder relationship is stored in the folder object.

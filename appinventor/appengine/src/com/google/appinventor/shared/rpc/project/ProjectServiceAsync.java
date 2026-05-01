@@ -55,6 +55,11 @@ public interface ProjectServiceAsync {
   void restoreProject(long projectId, AsyncCallback<UserProject> callback);
 
   /**
+   * @see ProjectService#setProjectPublic(long, boolean)
+   */
+  void setProjectPublic(long projectId, boolean isProjectPublic, AsyncCallback<Void> callback);
+
+  /**
    * @see ProjectService@loginToGallery()
    */
 

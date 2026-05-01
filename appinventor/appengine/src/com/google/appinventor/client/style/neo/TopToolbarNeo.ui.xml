@@ -42,6 +42,9 @@
         <actions:CheckpointAction/>
       </ai:DropDownItem>
       <hr/>
+      <ai:DropDownItem name="ShareProject" caption="{messages.shareProjectMenuItem}">
+        <actions:ShareProjectAction/>
+      </ai:DropDownItem>
       <ai:DropDownItem name="ExportProject" caption="{messages.exportButton}">
         <actions:ExportProjectAction/>
       </ai:DropDownItem>
