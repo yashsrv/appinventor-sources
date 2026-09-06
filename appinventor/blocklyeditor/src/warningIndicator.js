@@ -250,7 +250,28 @@ Blockly.WarningIndicator.prototype.updateWarningToggleText = function() {
   } else {
     this.warningToggleText_.textContent = Blockly.Msg.SHOW_WARNINGS;
   }
+  this.resizeWarningToggle_();
 }
+
+/**
+ * Resize the warning toggle to fit its current label.
+ *
+ * @private
+ */
+Blockly.WarningIndicator.prototype.resizeWarningToggle_ = function() {
+  var textWidth = this.warningToggleText_.getComputedTextLength();
+  if (textWidth === 0) {
+    requestAnimationFrame(this.resizeWarningToggle_.bind(this));
+    return;
+  }
+
+  var left = -15;
+  var horizontalPadding = 16;
+  var width = Math.ceil(textWidth + horizontalPadding);
+  this.warningToggle_.setAttribute('width', width);
+  this.warningToggleText_.setAttribute(
+      'transform', 'translate(' + (left + width / 2) + ', 35)');
+};
 
 /**
  * Call to change the current warning state on all screens.
@@ -291,10 +312,11 @@ Blockly.WarningIndicator.prototype.onclickErrorNavNext = function() {
  *     are already on the workspace.
  */
 Blockly.WarningIndicator.prototype.position = function(metrics, savedPositions) {
+  this.resizeWarningToggle_();
   this.position_(metrics);
 }
 
 Blockly.WarningIndicator.prototype.getBoundingRectangle = function() {
-  var width = 120;  // TODO: this is a guess
+  var width = Number(this.warningToggle_.getAttribute('width'));
   return new Blockly.utils.Rect(this.left_, this.left_ + width, this.top_, this.top_ + this.INDICATOR_HEIGHT_)
 }
